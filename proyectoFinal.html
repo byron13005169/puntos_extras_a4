@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var precio_base = 2000;
+        var edad_18 = 0.1; // 10%
+        var edad_25 = 0.2; // 20%
+        var edad_50 = 0.3; // 30%
+        var casado_18 = 0.1; // 10%
+        var casado_25 = 0.2; // 20%
+        var casado_50 = 0.3; // 30%
+        var hijos_recargo = 0.2; // 20%
+        var recargo = 0;
+        var recargo_total = 0;
+        var precio_final = 0;
+
+        //---------------> DATA INSERT
+        alert('Bienvenido a Asegurada TK-U. A continuación nuestro cotizador te hará algunas preguntas.');
+        var nombre = prompt("Ingresa tu nombre, por favor");
+        var mayor_edad = confirm('Pesiona Aceptar, si tienes 18 años o más.');
+
+        if(mayor_edad){
+            var edad = prompt("¿Cuántos años tienes? Ingresa solamente números");
+            var casado = prompt("¿Estás casado actualmente? (si o no)");
+
+            //---------------> COUPLE DATA
+            var recargo_conyugue = 0;
+            var edad_conyuge;
+
+            if("SI" == casado.toUpperCase()){
+                edad_conyuge = prompt("¿Qué edad tiene tu esposo/a? Ingresa solamente números");
+                var edad_numero = parseInt(edad);
+                var edad_conyuge_numero = parseInt(edad_conyuge);
+                if (edad_conyuge_numero <= 25){
+                    recargo_conyugue = precio_base * casado_18;
+                } else if(edad_conyuge <= 49){
+                    recargo_conyugue = precio_base * casado_25;
+                } else {
+                    recargo_conyugue = precio_base * casado_50;
+                }
+            }
+
+            //---------------> CHILDREN'S DATA
+            var recargo_hijos = 0;
+            var hijos = prompt("¿Tienes hijos o hijas? (si o no) ");
+
+            if("SI" == hijos.toUpperCase()){
+                var cant_hijos = prompt("¿Cuántos hijos tienes?Ingresa solamente números");
+                var cantidad_hijos = parseInt(cant_hijos);
+                recargo_hijos = (cantidad_hijos * precio_base) * hijos_recargo;
+            }
+
+            //--------------->  FINAL PRICE
+            if(edad_numero >= 18 && edad_numero < 25){
+                recargo = precio_base * edad_18;
+                recargo_total = recargo_hijos + recargo + recargo_conyugue;
+            } else if (edad_numero >= 25 && edad_numero <= 49){
+                recargo = precio_base * edad_25;
+                recargo_total = recargo_hijos + recargo + recargo_conyugue;
+            } else {
+                recargo = precio_base * edad_50;
+                recargo_total = recargo_hijos + recargo + recargo_conyugue;
+            }
+
+            precio_final = precio_base + recargo_total;
+            alert('Gracias por tu paciencia ' + nombre + ', El valor base de la prima es de: Q'+ precio_base+ '. \nEl recargo a tu prima será de Q' + recargo_total + '\nEl precio final de la prima será de: Q' + precio_final);
+
+        } else {
+            alert('Lo sentimos, debes ser mayor de edad para optar a un seguro');
+        }
+    </script>
+</body>
+</html>
